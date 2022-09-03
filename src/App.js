@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import Interview from "views/Interview";
-import Main from "views/Main";
+import Interview from "pages/Interview";
+import Main from "pages/Main";
 
 function App() {
 	return (

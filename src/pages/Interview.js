@@ -8,6 +8,8 @@ import React from "react";
 
 function Interview() {
 	const [modalVisible, setModalVisible] = useState(false);
+	const [checkAnswer, setCheckAnswer] = useState(false);
+
 	const openModal = () => {
 		setModalVisible(true);
 	};
@@ -43,7 +45,15 @@ function Interview() {
 					maskClosable={true}
 					onClose={closeModal}
 				>
-					Hello
+					<form>
+						<input className="border-2" />
+						<input className="border-2" />
+						<input className="border-2" />
+						<input className="border-2" />
+						<input className="border-2" />
+						<input className="border-2" />
+					</form>
+					<Button>로그인</Button>
 				</Modal>
 			)}
 		</>
