@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 
 const Timer = () => {
-	const [sec, setSec] = useState(0);
+	const [sec, setSec] = useState(60);
 	const time = useRef(60);
 	const timerId = useRef(null);
 
 	useEffect(() => {
 		timerId.current = setInterval(() => {
-			setSec(time.current % 60);
+			setSec(time.current - 1);
 			time.current -= 1;
 		}, 1000);
 
@@ -16,7 +16,6 @@ const Timer = () => {
 
 	useEffect(() => {
 		if (time.current <= 0) {
-			console.log("타임 아웃");
 			clearInterval(timerId.current);
 		}
 	}, [sec]);
