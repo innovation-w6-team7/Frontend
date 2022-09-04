@@ -3,6 +3,7 @@ import Button from "components/Button/Button";
 import Timer from "components/Timer/Timer";
 import Form from "components/Form/Form";
 import Modal from "components/Modal/Modal";
+import Login from "components/Login/Login";
 import { useState } from "react";
 import React from "react";
 
@@ -45,15 +46,7 @@ function Interview() {
 					maskClosable={true}
 					onClose={closeModal}
 				>
-					<form>
-						<input className="border-2" />
-						<input className="border-2" />
-						<input className="border-2" />
-						<input className="border-2" />
-						<input className="border-2" />
-						<input className="border-2" />
-					</form>
-					<Button>로그인</Button>
+					<Login />
 				</Modal>
 			)}
 		</>
