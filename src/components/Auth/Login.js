@@ -1,8 +1,17 @@
 import React from "react";
-import Button from "components/Button/Button";
+
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { loginUser } from "api/Users";
+import { setRefreshToken } from "storage/Cookie";
+import { SET_TOKEN } from "redux/tokenSlice";
+
+import Button from "components/Button/Button";
 
 function Login() {
+	const dispatch = useDispatch();
+
 	const [user, setUser] = useState({
 		nickname: "",
 		password: "",
@@ -14,10 +23,23 @@ function Login() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
 		const { nickname, password } = user;
 		alert(`nickname: ${nickname}, password: ${password}`);
 	};
+
+	const onValid = async ({ userid, password }) => {
+		// 백으로부터 받은 응답
+		const response = await loginUser({ userid, password });
+
+		if (response.status) {
+			// 쿠키에 Refresh Token, store에 Access Token 저장
+			setRefreshToken(response.json.refresh_token);
+			dispatch(SET_TOKEN(response.json.access_token));
+		} else {
+			console.log(response.json);
+		}
+	};
+
 	return (
 		<form onSubmit={handleSubmit}>
 			<div className="font-bold"> 아이디 </div>

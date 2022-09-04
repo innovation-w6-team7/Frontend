@@ -1,11 +1,11 @@
+import React from "react";
+import { useState } from "react";
 import Layout from "components/Layout/Layout";
 import Button from "components/Button/Button";
 import Timer from "components/Timer/Timer";
 import Form from "components/Form/Form";
 import Modal from "components/Modal/Modal";
-import Login from "components/Login/Login";
-import { useState } from "react";
-import React from "react";
+import Login from "components/Auth/Login";
 
 function Interview() {
 	const [modalVisible, setModalVisible] = useState(false);
