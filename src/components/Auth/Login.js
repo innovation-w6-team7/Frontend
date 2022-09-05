@@ -57,7 +57,7 @@ function Login() {
 				className="border-b-2"
 			/>
 			<div>
-				<Button type="submt" className="">
+				<Button onClick={onValid} type="submt" className="">
 					제출
 				</Button>
 			</div>

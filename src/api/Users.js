@@ -1,4 +1,5 @@
 // promise 요청 타임아웃 시간 선언
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const TIME_OUT = 300 * 1000;
 
 // 에러 처리를 위한 status 선언
@@ -9,7 +10,7 @@ const statusError = {
 	},
 };
 
-// 백으로 요청할 promis
+// 백으로 요청할 promise
 const requestPromise = (url, option) => {
 	return fetch(url, option);
 };
@@ -23,7 +24,7 @@ const timeoutPromise = () => {
 
 // promise 요청
 const getPromise = async (url, option) => {
-	return await Promise.race([requestPromise(url, option), timeoutPromise()]);
+	return await Promise.race([requestPromise("url", option), timeoutPromise()]);
 };
 
 // 백으로 로그인 요청
@@ -34,6 +35,35 @@ export const loginUser = async (credentials) => {
 			"Content-Type": "application/json;charset=UTF-8",
 		},
 		body: JSON.stringify(credentials),
+	};
+
+	const data = await getPromise("/login-url", option).catch(() => {
+		return statusError;
+	});
+
+	if (parseInt(Number(data.status) / 100) === 2) {
+		const status = data.ok;
+		const code = data.status;
+		const text = await data.text();
+		const json = text.length ? JSON.parse(text) : "";
+
+		return {
+			status,
+			code,
+			json,
+		};
+	} else {
+		return statusError;
+	}
+};
+
+export const requestToken = async (refreshToken) => {
+	const option = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json;charset=UTF-8",
+		},
+		body: JSON.stringify({ refresh_token: refreshToken }),
 	};
 
 	const data = await getPromise("/login-url", option).catch(() => {
