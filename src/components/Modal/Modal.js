@@ -41,6 +41,45 @@ function Modal({
 	);
 }
 
+export const anotherAnswerModal = ({
+	className,
+	onClose,
+	maskClosable,
+	closable,
+	visible,
+	children,
+}) => {
+	const onMaskClick = (e) => {
+		if (e.target === e.currentTarget) {
+			onClose(e);
+		}
+	};
+
+	const close = (e) => {
+		if (onClose) {
+			onClose(e);
+		}
+	};
+
+	return (
+		<ModalOverlay visible={visible}>
+			<ModalWrapper
+				className={className}
+				onClick={maskClosable ? onMaskClick : null}
+				tabIndex="-1"
+				visible={visible}
+			>
+				<ModalInner tabIndex="0" className="modal-inner">
+					{closable && (
+						<VscChromeClose className="modal-close" onClick={close} />
+					)}
+					{children}
+				</ModalInner>
+			</ModalWrapper>
+		</ModalOverlay>
+	);
+};
+
 export default Modal;
 
 const ModalWrapper = styled.div`

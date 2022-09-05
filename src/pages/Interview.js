@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { anotherAnswerModal } from "components/Modal/Modal";
 import Layout from "components/Layout/Layout";
 import Button from "components/Button/Button";
 import Timer from "components/Timer/Timer";
@@ -9,16 +10,17 @@ import Login from "components/Auth/Login";
 
 function Interview() {
 	const navigate = useNavigate();
-
 	const [modalVisible, setModalVisible] = useState(false);
-	const [checkAnswer, setCheckAnswer] = useState(false);
+	const [checkAnswer, setCheckAnswer] = useState(true);
 
 	const openModal = () => {
 		setModalVisible(true);
 	};
+
 	const closeModal = () => {
 		setModalVisible(false);
 	};
+	console.log(checkAnswer);
 	return (
 		<>
 			<Layout>
@@ -59,7 +61,7 @@ function Interview() {
 									>
 										그만 풀기
 									</Button>
-									<Button onClick={openModal}>다른 사람이 푼 답안 보기</Button>
+									<Button onClick>다른 사람이 푼 답안 보기</Button>
 									<Button
 										onClick={() => {
 											setCheckAnswer(!checkAnswer);
