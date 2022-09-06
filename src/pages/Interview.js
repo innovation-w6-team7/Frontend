@@ -1,26 +1,33 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { anotherAnswerModal } from "components/Modal/Modal";
+import { AnotherAnswerModal } from "components/Modal/Modal";
 import Layout from "components/Layout/Layout";
 import Button from "components/Button/Button";
 import Timer from "components/Timer/Timer";
 import Modal from "components/Modal/Modal";
 import Login from "components/Auth/Login";
+import Register from "components/Auth/Register";
+import AnotherAnswer from "components/Answer/AnotherAnswer";
 
 function Interview() {
 	const navigate = useNavigate();
+
 	const [modalVisible, setModalVisible] = useState(false);
 	const [checkAnswer, setCheckAnswer] = useState(true);
 
+	const [checkAnotherAnswer, setCheckAnotherAnswer] = useState(true);
+	const [AnotherModalVisible, setAnotherModalVisible] = useState(false);
+
+	const [register, setRegister] = useState(false);
+
 	const openModal = () => {
-		setModalVisible(true);
+		setModalVisible(!modalVisible);
+	};
+	const openCheckAnotherAnswer = () => {
+		setAnotherModalVisible(!AnotherModalVisible);
 	};
 
-	const closeModal = () => {
-		setModalVisible(false);
-	};
-	console.log(checkAnswer);
 	return (
 		<>
 			<Layout>
@@ -61,7 +68,9 @@ function Interview() {
 									>
 										그만 풀기
 									</Button>
-									<Button onClick>다른 사람이 푼 답안 보기</Button>
+									<Button onClick={openCheckAnotherAnswer}>
+										다른 사람이 푼 답안 보기
+									</Button>
 									<Button
 										onClick={() => {
 											setCheckAnswer(!checkAnswer);
@@ -80,11 +89,37 @@ function Interview() {
 					visible={modalVisible}
 					closable={true}
 					maskClosable={true}
-					onClose={closeModal}
+					onClose={openModal}
 				>
 					<Login />
-					<Button>회원가입</Button>
+					<Button
+						onClick={() => {
+							setRegister(!register);
+						}}
+					>
+						회원가입
+					</Button>
 				</Modal>
+			)}
+			{register && (
+				<Modal
+					visible={modalVisible}
+					closable={true}
+					maskClosable={true}
+					onClose={openModal}
+				>
+					<Register />
+				</Modal>
+			)}
+			{checkAnotherAnswer && (
+				<AnotherAnswerModal
+					visible={AnotherModalVisible}
+					closable={true}
+					maskClosable={true}
+					onClose={openCheckAnotherAnswer}
+				>
+					<AnotherAnswer></AnotherAnswer>
+				</AnotherAnswerModal>
 			)}
 		</>
 	);

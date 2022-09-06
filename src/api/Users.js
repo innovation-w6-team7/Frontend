@@ -1,5 +1,5 @@
 // promise 요청 타임아웃 시간 선언
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = "http://13.125.250.180/";
 const TIME_OUT = 300 * 1000;
 
 // 에러 처리를 위한 status 선언
@@ -12,7 +12,7 @@ const statusError = {
 
 // 백으로 요청할 promise
 const requestPromise = (url, option) => {
-	return fetch(url, option);
+	return fetch(`${BASE_URL}`, option);
 };
 
 // promise 타임아웃 처리
@@ -24,7 +24,10 @@ const timeoutPromise = () => {
 
 // promise 요청
 const getPromise = async (url, option) => {
-	return await Promise.race([requestPromise("url", option), timeoutPromise()]);
+	return await Promise.race([
+		requestPromise(`${BASE_URL}`, option),
+		timeoutPromise(),
+	]);
 };
 
 // 백으로 로그인 요청

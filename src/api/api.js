@@ -1,5 +1,4 @@
 import axios from "axios";
-import Interview from "pages/Interview";
 
 const api = axios.create({
 	baseURL: "http://13.125.250.180",
@@ -7,6 +6,7 @@ const api = axios.create({
 		"content-type": "application/json;charset=UTF-8",
 		accept: "application/json,",
 	},
+	withCredentials: true,
 });
 
 api.interceptors.request.use(function (config) {
@@ -29,31 +29,31 @@ export const apis = {
 			username: username,
 			password: password,
 		}),
-	getAccessToken: () =>
+	getAccessToken: (accessToken) =>
 		api.post("/auth/member/reissue", {
 			Authorization: `${accessToken}`,
 		}),
 
 	// interview
-	myAnswer: (interviewid) =>
+	myAnswer: (interviewid, accessToken) =>
 		api.post(`/auth/interview/${interviewid}`, {
 			Authorization: `${accessToken}`,
 		}),
 	anotherAnswer: (interviewid) => api.get(`/interview/${interviewid}/answer`),
 
 	// like
-	like: (interviewid) =>
+	like: (interviewid, accessToken) =>
 		api.post(`/auth/interview/${interviewid}/like`, {
 			Authorization: `${accessToken}`,
 		}),
 
 	// mypage
-	myList: () =>
+	myList: (accessToken) =>
 		api.get("/auth/interview/mypage", {
 			Authorization: `${accessToken}`,
 		}),
-	private: (interviewid) => {
-		api.put(`/auth/interview/mypage/${Interviewid}`, {
+	private: (interviewid, accessToken) => {
+		api.put(`/auth/interview/mypage/${interviewid}`, {
 			Authorization: `${accessToken}`,
 		});
 	},
