@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { VscChromeClose } from "react-icons/vsc";
+import { apis } from "api/api";
 
 function Modal({
 	className,
@@ -41,7 +42,7 @@ function Modal({
 	);
 }
 
-export const anotherAnswerModal = ({
+export const AnotherAnswerModal = ({
 	className,
 	onClose,
 	maskClosable,

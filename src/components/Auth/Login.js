@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { loginUser } from "api/Users";
+import { apis } from "api/api";
 import { setRefreshToken } from "storage/Cookie";
 import { SET_TOKEN } from "redux/tokenSlice";
 
@@ -13,9 +13,10 @@ function Login() {
 	const dispatch = useDispatch();
 
 	const [user, setUser] = useState({
-		nickname: "",
+		username: "",
 		password: "",
 	});
+	const { username, password } = user;
 
 	const handleChange = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -23,29 +24,34 @@ function Login() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const { nickname, password } = user;
-		alert(`nickname: ${nickname}, password: ${password}`);
-	};
-
-	const onValid = async ({ userid, password }) => {
-		// 백으로부터 받은 응답
-		const response = await loginUser({ userid, password });
-
-		if (response.status) {
-			// 쿠키에 Refresh Token, store에 Access Token 저장
-			setRefreshToken(response.json.refresh_token);
-			dispatch(SET_TOKEN(response.json.access_token));
+		const { username, password } = user;
+		const test = apis
+			.login(username, password)
+			.then((response) => console.log(response.headers))
+			.then((a) => console.log(a));
+		if (test.headrs) {
+			console.log(test.headrs.authorization);
 		} else {
-			console.log(response.json);
+			console.log(test);
 		}
 	};
+
+	// const onValid = async (username, password) => {
+	// 	const response = await apis.login(username, password);
+	// 	if (response.status) {
+	// 		// 쿠키에 Refresh Token, store에 Access Token 저장
+	// 		console.log(response.status);
+	// 	} else {
+	// 		console.log(response.json);
+	// 	}
+	// };
 
 	return (
 		<form onSubmit={handleSubmit}>
 			<div className="font-bold"> 아이디 </div>
 			<input
 				type="text"
-				name="nickname"
+				name="username"
 				onChange={handleChange}
 				className="border-b-2"
 			/>
@@ -57,9 +63,7 @@ function Login() {
 				className="border-b-2"
 			/>
 			<div>
-				<Button onClick={onValid} type="submt" className="">
-					제출
-				</Button>
+				<Button type="submit">로그인</Button>
 			</div>
 		</form>
 	);
