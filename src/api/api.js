@@ -39,7 +39,7 @@ export const apis = {
 		api.post(`/auth/interview/${interviewid}`, {
 			Authorization: `${accessToken}`,
 		}),
-	anotherAnswer: (interviewid) => api.get(`/interview/${interviewid}/answer`),
+	anotherAnswer: (interviewid) => api.get(`/interview/${interviewid}/answers`),
 
 	// like
 	like: (interviewid, accessToken) =>

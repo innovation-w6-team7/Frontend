@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -27,24 +27,16 @@ function Login() {
 		const { username, password } = user;
 		const test = apis
 			.login(username, password)
-			.then((response) => console.log(response.headers))
-			.then((a) => console.log(a));
-		if (test.headrs) {
-			console.log(test.headrs.authorization);
-		} else {
-			console.log(test);
-		}
+			// .then((response) => setRefreshToken(response.headers["refresh-token"]))
+			.then((response) => {
+				setRefreshToken(response.headers["refresh-token"]);
+				response.data.success
+					? console.log("good")
+					: alert(
+							"아이디 또는 비밀번호를 잘못 입력했습니다. \n확인 후 다시 입력해주세요."
+					  );
+			});
 	};
-
-	// const onValid = async (username, password) => {
-	// 	const response = await apis.login(username, password);
-	// 	if (response.status) {
-	// 		// 쿠키에 Refresh Token, store에 Access Token 저장
-	// 		console.log(response.status);
-	// 	} else {
-	// 		console.log(response.json);
-	// 	}
-	// };
 
 	return (
 		<form onSubmit={handleSubmit}>

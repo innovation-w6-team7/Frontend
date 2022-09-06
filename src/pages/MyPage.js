@@ -1,7 +1,11 @@
-import Layout from "components/Layout/Layout";
+import { apis } from "api/api";
+import { getCookieToken } from "storage/Cookie";
+
 import React from "react";
+import Layout from "components/Layout/Layout";
 
 export default function MyPage() {
+	console.log(getCookieToken("refresh_token"));
 	return (
 		<Layout>
 			<div>내가 푼 문제</div>
