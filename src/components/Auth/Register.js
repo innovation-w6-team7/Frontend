@@ -22,37 +22,37 @@ function Register() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className="text-center">
 			<div className="font-bold"> 아이디 </div>
 			<input
 				type="text"
 				name="username"
 				onChange={handleChange}
-				className="border-b-2"
+				className="w-8/12 m-3 border-b-2"
 			/>
 			<div className="font-bold"> 비밀번호 </div>
 			<input
 				type="text"
 				name="password"
 				onChange={handleChange}
-				className="border-b-2"
+				className="w-8/12 m-3 border-b-2"
 			/>
 			<div className="font-bold"> 비밀번호 확인 </div>
 			<input
 				type="text"
 				name="passwordConfirm"
 				onChange={handleChange}
-				className="border-b-2"
+				className="w-8/12 m-3 border-b-2"
 			/>
 			<div className="font-bold"> 닉네임 </div>
 			<input
 				type="text"
 				name="nickname"
 				onChange={handleChange}
-				className="border-b-2"
+				className="w-8/12 m-3 border-b-2"
 			/>
 			<div>
-				<Button type="submit">제출</Button>
+				<Button type="submit">회원가입</Button>
 			</div>
 		</form>
 	);

@@ -4,19 +4,22 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { apis } from "api/api";
-import { setRefreshToken } from "storage/Cookie";
+import { setAccessToekn, setRefreshToken } from "storage/Cookie";
 import { SET_TOKEN } from "redux/tokenSlice";
 
 import Button from "components/Button/Button";
 
-function Login() {
-	const dispatch = useDispatch();
-
+function Login({ onClose }) {
 	const [user, setUser] = useState({
 		username: "",
 		password: "",
 	});
-	const { username, password } = user;
+
+	const close = (e) => {
+		if (onClose) {
+			onClose(e);
+		}
+	};
 
 	const handleChange = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -25,34 +28,34 @@ function Login() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const { username, password } = user;
-		const test = apis
-			.login(username, password)
-			// .then((response) => setRefreshToken(response.headers["refresh-token"]))
-			.then((response) => {
-				setRefreshToken(response.headers["refresh-token"]);
-				response.data.success
-					? console.log("good")
-					: alert(
-							"아이디 또는 비밀번호를 잘못 입력했습니다. \n확인 후 다시 입력해주세요."
-					  );
-			});
+
+		apis.login(username, password).then((response) => {
+			setRefreshToken(response.headers["refresh-token"]);
+			setAccessToekn(response.headers["authorization"]);
+			response.data.success
+				? close()
+				: alert(
+						"아이디 또는 비밀번호를 잘못 입력했습니다. \n확인 후 다시 입력해주세요."
+				  );
+			setUser("");
+		});
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} className="text-center">
 			<div className="font-bold"> 아이디 </div>
 			<input
 				type="text"
 				name="username"
 				onChange={handleChange}
-				className="border-b-2"
+				className="w-8/12 m-3 border-b-2"
 			/>
 			<div className="font-bold"> 비밀번호 </div>
 			<input
-				type="text"
+				type="password"
 				name="password"
 				onChange={handleChange}
-				className="border-b-2"
+				className="w-8/12 m-3 border-b-2"
 			/>
 			<div>
 				<Button type="submit">로그인</Button>

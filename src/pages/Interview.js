@@ -1,8 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTopic } from "redux/topicSlice";
+import { getCookieToken } from "storage/Cookie";
 
 import { AnotherAnswerModal } from "components/Modal/Modal";
 import Layout from "components/Layout/Layout";
@@ -19,22 +20,24 @@ function Interview() {
 
 	const interviewList = useSelector((state) => state.topic.list);
 
-	const [modalVisible, setModalVisible] = useState(false);
+	const [loginModal, setLoginModal] = useState(false);
+	const [registerModal, setRegisterModal] = useState(false);
 	const [checkAnswer, setCheckAnswer] = useState(true);
 
 	const [checkAnotherAnswer, setCheckAnotherAnswer] = useState(true);
 	const [AnotherModalVisible, setAnotherModalVisible] = useState(false);
 
-	const [register, setRegister] = useState(false);
+	const openLoginModal = () => {
+		setLoginModal(!loginModal);
+	};
 
-	const openModal = () => {
-		setModalVisible(!modalVisible);
+	const openRegisterModal = () => {
+		setRegisterModal(!registerModal);
 	};
 	const openCheckAnotherAnswer = () => {
 		setAnotherModalVisible(!AnotherModalVisible);
 	};
 
-	console.log(interviewList);
 	return (
 		<>
 			<Layout>
@@ -53,7 +56,20 @@ function Interview() {
 										</div>
 										<input className="w-8/12 p-4 m-4 border-2 shadow-xl h-2/4 rounded-3xl" />
 										<div className="fixed flex justify-center w-full gap-40 bottom-28">
-											<Button onClick={openModal}>저장하기</Button>
+											<Button
+												onClick={() => {
+													if (
+														getCookieToken("access_token") !== "undefined" &&
+														getCookieToken("access_token")
+													) {
+														console.log("good!");
+													} else {
+														openLoginModal();
+													}
+												}}
+											>
+												저장하기
+											</Button>
 											<Button
 												onClick={() => {
 													setCheckAnswer(!checkAnswer);
@@ -68,7 +84,7 @@ function Interview() {
 						) : (
 							<>
 								<div className="mt-10 text-3xl font-bold">예시 답안</div>
-								<div className="m-20"> {interviewList[0].answer}</div>
+								<div className="m-20 text-lg"> {interviewList[0].answer}</div>
 								<div className="fixed flex justify-center w-full gap-40 bottom-28">
 									<Button
 										onClick={() => {
@@ -98,29 +114,31 @@ function Interview() {
 					</div>
 				</div>
 			</Layout>
-			{modalVisible && (
+			{loginModal && (
 				<Modal
-					visible={modalVisible}
+					visible={loginModal}
 					closable={true}
 					maskClosable={true}
-					onClose={openModal}
+					onClose={openLoginModal}
 				>
-					<Login />
-					<Button
+					<Login onClose={openLoginModal} />
+					<div
+						className="mt-8 text-center text-gray-500 cursor-pointer "
 						onClick={() => {
-							setRegister(!register);
+							setRegisterModal(!registerModal);
+							setLoginModal(!loginModal);
 						}}
 					>
-						회원가입
-					</Button>
+						회원이 아니신가요? Click
+					</div>
 				</Modal>
 			)}
-			{register && (
+			{registerModal && (
 				<Modal
-					visible={modalVisible}
+					visible={registerModal}
 					closable={true}
 					maskClosable={true}
-					onClose={openModal}
+					onClose={openRegisterModal}
 				>
 					<Register />
 				</Modal>

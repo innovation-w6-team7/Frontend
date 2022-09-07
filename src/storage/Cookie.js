@@ -13,6 +13,17 @@ export const setRefreshToken = (refreshToken) => {
 	});
 };
 
+export const setAccessToekn = (accesstoken) => {
+	const today = new Date();
+	const expireDate = today.setDate(today.getDate() + 7);
+
+	return cookies.set("access_token", accesstoken, {
+		sameSite: "strict",
+		path: "/",
+		expires: new Date(expireDate),
+	});
+};
+
 export const getCookieToken = (name) => {
 	return cookies.get(name);
 };
