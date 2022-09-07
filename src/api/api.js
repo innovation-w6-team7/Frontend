@@ -37,9 +37,13 @@ export const apis = {
 	// interview
 	getTopic: (topic) => api.get(`/interview?topic=${topic}`),
 	getSubTopic: (topic) => api.get(`/interview/start?subtopic=${topic}`),
-	myAnswer: (interviewid, accessToken) =>
-		api.post(`/auth/interview/${interviewid}`, {
-			Authorization: `${accessToken}`,
+	myAnswer: (interviewid, accessToken, content, publicTF) =>
+		api.post(`/auth/interview/${interviewid}/myanswer`, {
+			headers: {
+				Authorization: `${accessToken}`,
+			},
+			content: content,
+			publicTF: publicTF,
 		}),
 	anotherAnswer: (interviewid) => api.get(`/interview/${interviewid}/answers`),
 

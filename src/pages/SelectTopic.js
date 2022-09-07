@@ -31,42 +31,45 @@ const SelectTopic = () => {
 
 	return (
 		<Layout>
-			<div className="flex flex-col items-center gap-10">
-				{selectTopic ? (
-					<>
-						<div className="text-3xl font-bold mt-36 mb-36">
-							어떤 면접을 <span className="text-[#4593FC]">희망</span>하시나요?
-						</div>
-						{topic.map((topic, index) => (
-							<LongButton
-								key={index}
-								onClick={() => {
-									fetchTopic(topic);
-								}}
-							>
-								{topic}
-							</LongButton>
-						))}
-					</>
-				) : (
-					<>
-						<div className="text-3xl font-bold text-center mt-36 mb-36 ">
-							어떤 <span className="text-[#4593FC]">주제</span>를
-							선택하실건가요?
-						</div>
-						{topicData &&
-							topicData.map((subTopic) => (
+			<div className="flex items-center h-full">
+				<div className="flex flex-col items-center w-full gap-10 h-5/6">
+					{selectTopic ? (
+						<>
+							<div className="text-3xl font-bold mt-36 mb-36">
+								어떤 면접을 <span className="text-[#4593FC]">희망</span>
+								하시나요?
+							</div>
+							{topic.map((topic, index) => (
 								<LongButton
-									key={subTopic.subtopicId}
+									key={index}
 									onClick={() => {
-										fetchSubTopic(subTopic.subtopicName, subTopic.subtopicId);
+										fetchTopic(topic);
 									}}
 								>
-									{subTopic.subtopicName}
+									{topic}
 								</LongButton>
 							))}
-					</>
-				)}
+						</>
+					) : (
+						<>
+							<div className="text-3xl font-bold text-center mt-36 mb-36 ">
+								어떤 <span className="text-[#4593FC]">주제</span>를
+								선택하실건가요?
+							</div>
+							{topicData &&
+								topicData.map((subTopic) => (
+									<LongButton
+										key={subTopic.subtopicId}
+										onClick={() => {
+											fetchSubTopic(subTopic.subtopicName, subTopic.subtopicId);
+										}}
+									>
+										{subTopic.subtopicName}
+									</LongButton>
+								))}
+						</>
+					)}
+				</div>
 			</div>
 		</Layout>
 	);

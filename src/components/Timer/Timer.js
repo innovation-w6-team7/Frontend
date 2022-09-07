@@ -20,7 +20,11 @@ const Timer = () => {
 		}
 	}, [sec]);
 
-	return <div className="timer">{sec} 초</div>;
+	return (
+		<div className="p-2 mt-5 text-white border-2 rounded-3xl timer bg-slate-400">
+			{sec}초 안에 정답을 적어보세요
+		</div>
+	);
 };
 
 export default Timer;

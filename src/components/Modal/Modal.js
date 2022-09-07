@@ -72,7 +72,11 @@ export const AnotherAnswerModal = ({
 			>
 				<ModalInner tabIndex="0" className="modal-inner">
 					{closable && (
-						<VscChromeClose className="modal-close" onClick={close} />
+						<VscChromeClose
+							className="modal-close"
+							className="mb-4"
+							onClick={close}
+						/>
 					)}
 					{children}
 				</ModalInner>
@@ -114,8 +118,8 @@ const ModalInner = styled.div`
 	box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
 	background-color: #fff;
 	border-radius: 10px;
-	width: 360px;
-	max-width: 480px;
+	width: auto;
+	max-width: 600px;
 	top: 50%;
 	transform: translateY(-50%);
 	margin: 0 auto;

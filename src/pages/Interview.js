@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTopic } from "redux/topicSlice";
 import { getCookieToken } from "storage/Cookie";
+import { apis } from "api/api";
 
 import { AnotherAnswerModal } from "components/Modal/Modal";
 import Layout from "components/Layout/Layout";
@@ -19,6 +20,7 @@ function Interview() {
 	const dispatch = useDispatch();
 
 	const interviewList = useSelector((state) => state.topic.list);
+	const ACCESS_TOKEN = getCookieToken("access_token");
 
 	const [loginModal, setLoginModal] = useState(false);
 	const [registerModal, setRegisterModal] = useState(false);
@@ -26,6 +28,8 @@ function Interview() {
 
 	const [checkAnotherAnswer, setCheckAnotherAnswer] = useState(true);
 	const [AnotherModalVisible, setAnotherModalVisible] = useState(false);
+
+	const [anotherAnswer, setAnotherAnswer] = useState();
 
 	const openLoginModal = () => {
 		setLoginModal(!loginModal);
@@ -42,7 +46,7 @@ function Interview() {
 		<>
 			<Layout>
 				<div className="flex items-center h-full">
-					<div className="flex flex-col items-center gap-3 w-full h-5/6 rounded-2xl border-4 border-[#3D6AFE]">
+					<div className="flex flex-col items-center gap-3 w-full h-5/6 rounded-2xl border-2 border-[#3D6AFE] shadow-2xl">
 						{checkAnswer ? (
 							<>
 								{interviewList[0] && (
@@ -51,18 +55,20 @@ function Interview() {
 										<div className="mt-10 text-3xl font-bold">
 											{interviewList[0].question}
 										</div>
-										<div className="mt-5 text-xl font-bold">
+										<div className="mt-5 text-xl font-bold text-[#4593FC]">
 											본인이 생각하는 답 적어보기{" "}
 										</div>
 										<input className="w-8/12 p-4 m-4 border-2 shadow-xl h-2/4 rounded-3xl" />
 										<div className="fixed flex justify-center w-full gap-40 bottom-28">
 											<Button
 												onClick={() => {
-													if (
-														getCookieToken("access_token") !== "undefined" &&
-														getCookieToken("access_token")
-													) {
-														console.log("good!");
+													if (ACCESS_TOKEN !== "undefined" && ACCESS_TOKEN) {
+														apis.myAnswer(
+															interviewList[0].id,
+															ACCESS_TOKEN,
+															"Test",
+															false
+														);
 													} else {
 														openLoginModal();
 													}
@@ -83,8 +89,13 @@ function Interview() {
 							</>
 						) : (
 							<>
-								<div className="mt-10 text-3xl font-bold">예시 답안</div>
-								<div className="m-20 text-lg"> {interviewList[0].answer}</div>
+								<div className="mt-32 text-3xl font-bold text-[#4593FC]">
+									예시 답안
+								</div>
+								<div className="p-4 m-20 text-lg border-2 shadow-md rounded-3xl">
+									{" "}
+									{interviewList[0].answer}{" "}
+								</div>
 								<div className="fixed flex justify-center w-full gap-40 bottom-28">
 									<Button
 										onClick={() => {
@@ -93,7 +104,16 @@ function Interview() {
 									>
 										그만 풀기
 									</Button>
-									<Button onClick={openCheckAnotherAnswer}>
+									<Button
+										onClick={() => {
+											apis
+												.anotherAnswer(interviewList[0].id)
+												.then((response) =>
+													setAnotherAnswer(response.data.data)
+												);
+											openCheckAnotherAnswer();
+										}}
+									>
 										다른 사람이 푼 답안 보기
 									</Button>
 									<Button
@@ -150,7 +170,7 @@ function Interview() {
 					maskClosable={true}
 					onClose={openCheckAnotherAnswer}
 				>
-					<AnotherAnswer></AnotherAnswer>
+					<AnotherAnswer anotherAnswer={anotherAnswer} />
 				</AnotherAnswerModal>
 			)}
 		</>

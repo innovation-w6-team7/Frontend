@@ -8,8 +8,8 @@ function Main() {
 	const navigate = useNavigate();
 	return (
 		<Layout>
-			<div className="flex flex-col items-center gap-10">
-				<>
+			<div className="flex items-center h-full">
+				<div className="flex flex-col items-center w-full gap-10 h-5/6">
 					<div className="text-3xl font-bold mt-36">벨터뷰</div>
 					<div className="cmt-10 mb-40 font-bold text-2xl text-[#4593FC]">
 						당신을 위한 기술면접 테스트
@@ -21,7 +21,7 @@ function Main() {
 					>
 						면접 진행하기
 					</LongButton>
-				</>
+				</div>
 			</div>
 		</Layout>
 	);
