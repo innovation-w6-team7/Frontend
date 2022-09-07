@@ -14,6 +14,7 @@ import Modal from "components/Modal/Modal";
 import Login from "components/Auth/Login";
 import Register from "components/Auth/Register";
 import AnotherAnswer from "components/Answer/AnotherAnswer";
+import Like from "components/Like/Like";
 
 function Interview() {
 	const navigate = useNavigate();
@@ -89,6 +90,7 @@ function Interview() {
 							</>
 						) : (
 							<>
+								<Like id={interviewList[0].id} ACCESS_TOKEN={ACCESS_TOKEN} />
 								<div className="mt-32 text-3xl font-bold text-[#4593FC]">
 									예시 답안
 								</div>

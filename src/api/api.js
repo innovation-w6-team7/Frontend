@@ -1,4 +1,7 @@
 import axios from "axios";
+import { getCookieToken } from "storage/Cookie";
+
+const ACCESS_TOKEN = getCookieToken("access_token");
 
 const api = axios.create({
 	baseURL: "http://13.125.250.180",
@@ -10,8 +13,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(function (config) {
-	const accessToken = document.cookie.split("=")[1];
-	config.headers.common["X-AUTH-TOKEN"] = `${accessToken}`;
+	config.headers.common["Authorization"] = ACCESS_TOKEN;
 	return config;
 });
 
@@ -37,30 +39,28 @@ export const apis = {
 	// interview
 	getTopic: (topic) => api.get(`/interview?topic=${topic}`),
 	getSubTopic: (topic) => api.get(`/interview/start?subtopic=${topic}`),
-	myAnswer: (interviewid, accessToken, content, publicTF) =>
+	myAnswer: (interviewid, ACCESS_TOKEN, content, publicTF) =>
 		api.post(`/auth/interview/${interviewid}/myanswer`, {
-			headers: {
-				Authorization: `${accessToken}`,
-			},
+			Authorization: ACCESS_TOKEN,
 			content: content,
 			publicTF: publicTF,
 		}),
 	anotherAnswer: (interviewid) => api.get(`/interview/${interviewid}/answers`),
 
 	// like
-	like: (interviewid, accessToken) =>
+	like: (interviewid, ACCESS_TOKEN) =>
 		api.post(`/auth/interview/${interviewid}/like`, {
-			Authorization: `${accessToken}`,
+			Authorization: ACCESS_TOKEN,
 		}),
 
 	// mypage
-	myList: (accessToken) =>
+	myList: (ACCESS_TOKEN) =>
 		api.get("/auth/interview/mypage", {
-			Authorization: `${accessToken}`,
+			Authorization: ACCESS_TOKEN,
 		}),
-	private: (interviewid, accessToken) => {
+	private: (interviewid, ACCESS_TOKEN) => {
 		api.put(`/auth/interview/mypage/${interviewid}`, {
-			Authorization: `${accessToken}`,
+			Authorization: ACCESS_TOKEN,
 		});
 	},
 };

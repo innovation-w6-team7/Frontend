@@ -3,7 +3,7 @@ import React from "react";
 function AnotherAnswer({ anotherAnswer }) {
 	return (
 		<div className="flex flex-col gap-3">
-			{anotherAnswer ? (
+			{anotherAnswer &&
 				anotherAnswer.map((answer, index) => (
 					<div
 						key={index}
@@ -14,12 +14,13 @@ function AnotherAnswer({ anotherAnswer }) {
 						</div>
 						<div>{answer.content}</div>
 					</div>
-				))
-			) : (
+				))}
+
+			{anotherAnswer && anotherAnswer.length == 0 ? (
 				<div className="text-center">
 					아직 다른 사람이 푼 답안이 없습니다 :(
 				</div>
-			)}
+			) : null}
 		</div>
 	);
 }
