@@ -5,6 +5,7 @@ export default function Button({ children, onClick, className }) {
 		<button
 			onClick={onClick}
 			className="w-2/12 h-16 border-2 border-[#3D6AFE] hover:bg-[#3D6AFE] hover:text-white rounded-3xl shadow-lg"
+			// className={`${size === "long" ? w - 6 / 12 : w - 2 / 23} ~~~`}
 		>
 			{children}
 		</button>

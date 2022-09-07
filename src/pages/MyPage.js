@@ -6,6 +6,7 @@ import Layout from "components/Layout/Layout";
 
 export default function MyPage() {
 	console.log(getCookieToken("refresh_token"));
+
 	return (
 		<Layout>
 			<div>내가 푼 문제</div>

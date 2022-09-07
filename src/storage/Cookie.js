@@ -13,8 +13,8 @@ export const setRefreshToken = (refreshToken) => {
 	});
 };
 
-export const getCookieToken = () => {
-	return cookies.get("refresh_token");
+export const getCookieToken = (name) => {
+	return cookies.get(name);
 };
 
 export const removeCookieToken = () => {

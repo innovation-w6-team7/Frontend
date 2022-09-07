@@ -1,1 +1,0 @@
-import { defaultInstance } from "./utils";

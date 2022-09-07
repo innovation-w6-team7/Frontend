@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
-import Layout from "components/Layout/Layout";
-import { LongButton } from "components/Button/Button";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apis } from "api/api";
+import { useDispatch, useSelector } from "react-redux";
+import { setTopic } from "redux/topicSlice";
+
+import Layout from "components/Layout/Layout";
+import { LongButton } from "components/Button/Button";
 
 const SelectTopic = () => {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
 	const topic = ["Frontend", "Backend", "CS"];
 
 	const [selectTopic, setSelectTopic] = useState(true);
@@ -20,7 +25,7 @@ const SelectTopic = () => {
 	const fetchSubTopic = (subTopic, id) => {
 		apis
 			.getSubTopic(subTopic)
-			.then((response) => setSubTopicData(response.data.data));
+			.then((response) => dispatch(setTopic(response.data.data)));
 		navigate(`/interview/${id}`);
 	};
 

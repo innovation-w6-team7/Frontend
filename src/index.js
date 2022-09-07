@@ -5,16 +5,23 @@ import App from "./App";
 
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import configureStore from "./redux/store";
+import store from "redux/store";
 import { CookiesProvider } from "react-cookie";
+
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+
+const persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<CookiesProvider>
-		<Provider store={configureStore}>
-			<BrowserRouter>
-				<App />
-			</BrowserRouter>
+		<Provider store={store}>
+			<PersistGate loading={null} persistor={persistor}>
+				<BrowserRouter>
+					<App />
+				</BrowserRouter>
+			</PersistGate>
 		</Provider>
 	</CookiesProvider>
 );
