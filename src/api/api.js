@@ -35,6 +35,8 @@ export const apis = {
 		}),
 
 	// interview
+	getTopic: (topic) => api.get(`/interview?topic=${topic}`),
+	getSubTopic: (topic) => api.get(`/interview/start?subtopic=${topic}`),
 	myAnswer: (interviewid, accessToken) =>
 		api.post(`/auth/interview/${interviewid}`, {
 			Authorization: `${accessToken}`,
