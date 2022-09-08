@@ -3,15 +3,19 @@ import { apis } from "api/api";
 import { AiOutlineHeart } from "react-icons/ai";
 
 function Like({ id, ACCESS_TOKEN }) {
-	console.log(id, ACCESS_TOKEN);
 	const setLike = () => {
-		apis.like(id).then((response) => console.log(response));
+		apis.like(id).then((response) => {
+			if (response.data.success == false) {
+				alert("로그인이 필요한 기능입니다.");
+			} else {
+				alert(response.data.data.message);
+			}
+		});
 	};
-	const onLike = "absolute w-10 h-10 m-4 right-4 text-pink-400";
 
 	return (
 		<AiOutlineHeart
-			className="absolute w-10 h-10 m-4 right-4"
+			className="absolute w-10 h-10 m-4 cursor-pointer right-4"
 			onClick={setLike}
 		></AiOutlineHeart>
 	);

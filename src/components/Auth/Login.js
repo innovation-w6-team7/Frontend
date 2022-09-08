@@ -18,6 +18,8 @@ function Login({ onClose }) {
 	const close = (e) => {
 		if (onClose) {
 			onClose(e);
+			alert("login 성공! \n다시 한 번 저장하기를 눌러주세요.");
+			window.location.reload();
 		}
 	};
 

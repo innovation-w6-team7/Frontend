@@ -64,12 +64,14 @@ function Interview() {
 											<Button
 												onClick={() => {
 													if (ACCESS_TOKEN !== "undefined" && ACCESS_TOKEN) {
-														apis.myAnswer(
-															interviewList[0].id,
-															ACCESS_TOKEN,
-															"Test",
-															false
-														);
+														apis
+															.myAnswer(
+																interviewList[0].id,
+																ACCESS_TOKEN,
+																"Test", // 답안 input value로 바꾸기
+																false
+															)
+															.then(alert("답변을 저장했습니다."));
 													} else {
 														openLoginModal();
 													}

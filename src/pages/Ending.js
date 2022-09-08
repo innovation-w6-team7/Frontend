@@ -20,7 +20,14 @@ function Ending() {
 					>
 						다른 문제 풀러 가기
 					</LongButton>
-					<LongButton> 내가 푼 / 찜한 문제 확인하기 </LongButton>
+					<LongButton
+						onClick={() => {
+							navigate("/mypage");
+						}}
+					>
+						{" "}
+						내가 푼 / 찜한 문제 확인하기{" "}
+					</LongButton>
 					<LongButton> 만든 사람들 </LongButton>
 				</div>
 			</div>
