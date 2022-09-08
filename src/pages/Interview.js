@@ -26,12 +26,16 @@ function Interview() {
 	const [loginModal, setLoginModal] = useState(false);
 	const [registerModal, setRegisterModal] = useState(false);
 	const [checkAnswer, setCheckAnswer] = useState(true);
+	const [myAnser, setMyAnswer] = useState("");
 
 	const [checkAnotherAnswer, setCheckAnotherAnswer] = useState(true);
 	const [AnotherModalVisible, setAnotherModalVisible] = useState(false);
 
 	const [anotherAnswer, setAnotherAnswer] = useState();
 
+	const onChange = (e) => {
+		setMyAnswer(e.target.value);
+	};
 	const openLoginModal = () => {
 		setLoginModal(!loginModal);
 	};
@@ -42,7 +46,6 @@ function Interview() {
 	const openCheckAnotherAnswer = () => {
 		setAnotherModalVisible(!AnotherModalVisible);
 	};
-
 	return (
 		<>
 			<Layout>
@@ -59,7 +62,10 @@ function Interview() {
 										<div className="mt-5 text-xl font-bold text-[#4593FC]">
 											본인이 생각하는 답 적어보기{" "}
 										</div>
-										<input className="w-8/12 p-4 m-4 border-2 shadow-xl h-2/4 rounded-3xl" />
+										<input
+											onChange={onChange}
+											className="w-8/12 p-4 m-4 border-2 shadow-xl h-2/4 rounded-3xl"
+										/>
 										<div className="fixed flex justify-center w-full gap-40 bottom-28">
 											<Button
 												onClick={() => {
@@ -68,7 +74,7 @@ function Interview() {
 															.myAnswer(
 																interviewList[0].id,
 																ACCESS_TOKEN,
-																"Test", // 답안 input value로 바꾸기
+																myAnser, // 답안 input value로 바꾸기
 																false
 															)
 															.then(alert("답변을 저장했습니다."));
